@@ -12,4 +12,4 @@ jobs:
       - name: Check that the app is responding
         uses: jtalk/url-health-check-action@v2
         with:
-          - url: https://aqueous-plains-05063.herokuapp.com/health
+          url: https://aqueous-plains-05063.herokuapp.com/health
