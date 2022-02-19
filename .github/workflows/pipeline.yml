@@ -44,4 +44,4 @@ jobs:
           heroku_app_name: aqueous-plains-05063
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           healthcheck: https://aqueous-plains-05063.herokuapp.com/health
-          rollbackonhealthcheckfailed: true
+          # rollbackonhealthcheckfailed: true
