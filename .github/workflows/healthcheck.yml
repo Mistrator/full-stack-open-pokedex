@@ -1,8 +1,12 @@
 name: Health check
 
 on:
-  schedule:
-    - cron: '3,18,33,48 * * * *'
+  # Just a placeholder for the disabled scheduled check
+  push:
+    branches:
+      - master
+  #schedule:
+  #  - cron: '3,18,33,48 * * * *'
 
 jobs:
   healthcheck:
