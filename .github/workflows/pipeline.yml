@@ -45,3 +45,26 @@ jobs:
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           healthcheck: https://aqueous-plains-05063.herokuapp.com/health
           rollbackonhealthcheckfailed: true
+      - name: report successful deployment to slack
+        if: always() && job.status == 'success' && github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '#skip')
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,commit,took
+          custom_payload: |
+            {
+              attachments: [{
+                color: 'good',
+                text: `Successfully built and deployed ${process.env.AS_COMMIT} of ${process.env.AS_REPO} in ${process.env.AS_TOOK}`
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL = ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: report failed build to slack
+        if: always() && job.status == 'failure'
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,took
+        env:
+          SLACK_WEBHOOK_URL = ${{ secrets.SLACK_WEBHOOK_URL }}
